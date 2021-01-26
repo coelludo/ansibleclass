@@ -1,0 +1,17 @@
+---
+- hosts: linuxservers
+  become: yes
+
+  vars:
+      package:
+         - httpd
+         - mariadb-server
+         - php
+         - php-mysqlnd
+
+  tasks:
+
+  - name: Is httpd running
+    debug:
+      msg: httpd is running
+    when: httpd_status.state == "started"
