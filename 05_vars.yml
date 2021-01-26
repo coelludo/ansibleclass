@@ -10,11 +10,23 @@
          - php-mysqlnd
 
   tasks:
+  - name: Install Packages
+    ansible.builtin.package:
+      name: "{{ package }}"
+      state: latest
+
+  - name: Enable httpd service
+    ansible.builtin.systemd:
+      name: httpd
+      state: started
+      enabled: yes
+    register: httpd_status
+
+  - name: Show Status
+    debug:
+      var: httpd_status
 
   - name: Is httpd running
     debug:
       msg: httpd is running
     when: httpd_status.state == "started"
-  - name: Show Status
-    debug:
-      var: httpd_status
